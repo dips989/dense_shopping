@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Contact Us{% endblock %}
+{% load static %}
+{% block body %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 bg-primary text-center py-1 text-light">
+      <h1>This is Contact section</h1>
+    </div>
+    <div class="col-md-6">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3720.9793670423874!2d79.07162871453798!3d21.153219388894552!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4c0f04ea0ce69%3A0x879dfe192c955dd!2sDistrict%20%26%20Sessions%20Court%2C%20Nagpur!5e0!3m2!1sen!2sin!4v1633326724958!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+    <div class="col-md-6 my-2">
+        <div class="form-group">
+          <label class="sr-only">Your name</label>
+          <input type="text" class="form-control" id="nameid" placeholder="Enter name....">
+          <span style="display:none;color:red;font-size: 14px;" id="error_name">Please Enter Valid Name</span>
+        </div>
+        <div class="form-group">
+          <label class="sr-only">Contact Number</label>
+          <input type="number" class="form-control" id="contactid" pattern="[0-9]{10}" placeholder="Enter contact no....">
+          <span style="display:none;color:red;font-size: 14px;" id="error_contact">Please Enter contact</span>
+        </div>
+        <div class="form-group">
+          <label class="sr-only">Subject</label>
+          <input type="text" class="form-control" id="subjectid" placeholder="Enter Subject....">
+          <span style="display:none;color:red;font-size: 14px;" id="error_subject">Please Enter subject</span>
+        </div>
+        <div class="form-group">
+          <label class="sr-only">Message</label>
+          <textarea class="form-control" rows="5" id="messageid" placeholder="Your message...."></textarea>
+          <span style="display:none;color:red;font-size: 14px;" id="error_message">Please Enter Message</span>
+        </div>
+        <div class="form-group">
+          <input type="submit" class="btn btn-success" value="Send Message" onclick="save_data()">
+        </div>
+    </div>
+  </div>
+</div>
+{% include 'Spapp/ajax.html' %}
+{% endblock %}

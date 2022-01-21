@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %} Checkout {% endblock %}
+{% block body %}
+{% load static %}
+<div class="container">
+  <div class="col my-4">
+      <h2>Step 1 - My Awesome Cart Express Checkout - Review Your Cart Items</h2>
+      <div class="my-4">
+          <ul class="list-group" id="items">
+          </ul>
+      </div>
+  </div>
+  <div class="col my-4">
+       <h2>Step 2 - Enter Address & Other Details:</h2>
+       <div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Name">
+                    <center style="margin-top: -1%;"><span style="display:none;color:red;font-size: 14px;" id="a_name_error">Please Enter name</span></center>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Email">
+                    <center style="margin-top: -1%;"><span style="display:none;color:red;font-size: 14px;" id="a_email_error">Please Enter email</span></center>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputAddress">Address</label>
+                <input type="text" class="form-control" id="address1" placeholder="1234 Main St">
+                <center style="margin-top: 0%;"><span style="display:none;color:red;font-size: 14px;" id="address1_error">Please Enter Address1</span></center>
+            </div>
+            <div class="form-group">
+                <label for="inputAddress2">Address Line 2</label>
+                <input type="text" class="form-control" id="address2" placeholder="Apartment, studio, or floor">
+                <center style="margin-top: -1%;"><span style="display:none;color:red;font-size: 14px;" id="address2_error">Please Enter Address2</span></center>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputCity">City</label>
+                    <input type="text" class="form-control" id="city">
+                    <center style="margin-top: -1%;"><span style="display:none;color:red;font-size: 14px;" id="city_error">Please Enter City</span></center>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">State</label>
+                    <input type="text" class="form-control" id="state" placeholder="Enter State">
+                    <center style="margin-top: -1%;"><span style="display:none;color:red;font-size: 14px;" id="state_error">Please Enter state</span></center>
+
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputZip">Zip</label>
+                    <input type="number" class="form-control" id="zip">
+                    <center style="margin-top: -1%;"><span style="display:none;color:red;font-size: 14px;" id="zip_error">Please Enter zip</span></center>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputZip">Phone Number</label>
+                <input type="number" class="form-control" id="phone">
+                <center style="margin-top: -1%;"><span style="display:none;color:red;font-size: 14px;" id="phone_error">Please Enter Phone</span></center>
+            </div>
+            <button type="submit" class="btn btn-primary" onclick="PlaceOrder()">Place Order</button>
+        </div>
+    </div>
+</div>
+{% include 'Spapp/ajax.html' %}
+<script>
+if (localStorage.getItem('cart') == null) {
+    var cart = {};
+} else {
+    cart = JSON.parse(localStorage.getItem('cart'));
+}
+
+var sum = 0;
+var totalPrice = 0;
+if ($.isEmptyObject(cart)) {
+    //if object is empty
+    mystr = `<p>Your cart is empty, please add some items to your cart before checking out!</p>`
+    $('#items').append(mystr);
+} else {
+    let total = 0;
+    for (item in cart) {
+        let name = cart[item][1];
+        let qty = cart[item][0];
+        let price = cart[item][2];
+
+        sum = sum + qty;
+        totalPrice = totalPrice + qty * price
+        mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+                    ${name}
+                    <span class="badge badge-primary badge-pill">Qty: ${qty} --> ${price} </span>
+                </li>`
+        $('#items').append(mystr);
+    }
+
+    $('#items').append(`<li class="list-group-item d-flex justify-content-between align-items-center"><strong>Total Bill</strong>
+          <span class="badge badge-primary badge-pill">Rs. ${totalPrice}</span></li>`)
+}
+document.getElementById('cart').innerHTML = sum;
+</script>
+{% endblock %}
